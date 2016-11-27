@@ -9,11 +9,18 @@
         http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc.xsd">
-        
+
 	<import resource="root-context.xml"></import>
 	<context:annotation-config />
 	<mvc:annotation-driven></mvc:annotation-driven>
 	<context:component-scan base-package="dyx.springweb.controller"></context:component-scan>
-
+	<!--配置拦截器, 多个拦截器,顺序执行 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<!-- 匹配的是url路径， 如果不配置或/**,将拦截所有的Controller -->
+			<mvc:mapping path="/**" />
+			<bean class="dyx.springweb.interceptor.AllInterceptror"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
 
 </beans>

@@ -30,9 +30,9 @@ public class AppTest {
 	}
 
 	@Test
-	public void testUserDao() {
-		UserDao userDao = ctx.getBean("userDao", UserDao.class);
-		List<User> l = userDao.getAllUser();
+	public void testService() {
+		UserService userService = ctx.getBean("userService", UserService.class);
+		List<User> l = userService.getAllUser();
 		System.out.println(l);
 	}
 

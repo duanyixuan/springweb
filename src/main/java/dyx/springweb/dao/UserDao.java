@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -19,8 +20,11 @@ public class UserDao {
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
-	
+
 	public List<User> getAllUser() {
-		return (List<User>) sessionFactory.getCurrentSession().createSQLQuery("select * from user.user").list();
-	}
+		Query query = sessionFactory.getCurrentSession().createSQLQuery("select id,name from user.user")
+				.addEntity(User.class);
+		List<User> list = query.list();
+		return list;
+	};
 }

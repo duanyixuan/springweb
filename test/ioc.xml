@@ -9,11 +9,21 @@
         http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc.xsd">
-
-	<bean id="user1" class="dyx.springweb.entity.User">
-	
-		<property name="id" value="15"></property>
-		<property name="name" value="dyx"></property>
+	<!--学习spring里如何加载properties -->
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations" value="classpath:test.properties" />
 	</bean>
 
+	<!-- <bean id="user1" class="dyx.springweb.entity.User"> <property name="id" 
+		value="${id}"></property> <property name="name" value="${name}"></property> 
+		</bean> -->
+	<bean class="dyx.springweb.ioc.MyBeanPostProcessor"></bean>
+
+	<!-- bean life cycle -->
+	<bean id="lifeCycle" class="dyx.springweb.entity.LifeCycle"
+		init-method="init" destroy-method="myDestroy">
+		<property name="id" value="15"></property>
+
+	</bean>
 </beans>

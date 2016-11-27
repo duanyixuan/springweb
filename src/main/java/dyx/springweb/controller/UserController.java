@@ -3,6 +3,8 @@ package dyx.springweb.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +28,7 @@ public class UserController {
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
-	
+
 	@RequestMapping(value = "all", method = RequestMethod.GET)
 	@ResponseBody
 	// fastjson
@@ -40,7 +42,7 @@ public class UserController {
 	@RequestMapping(value = "test")
 	@ResponseBody
 	// fastjson
-	public String test() {
+	public String test(HttpServletResponse response) {
 		return "hello";
 	}
 

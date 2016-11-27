@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!-- spring会优先使用jdk代理，即接口代理；当接口代理无法使用，采用cglib的代理方式 -->
+	<bean id="myImplement1" class="dyx.springweb.aop.MyImplement1"></bean>
+	<bean id="mySpringMethodInterceptor" class="dyx.springweb.aop.SpringMethodInterceptor"></bean>
+	<bean class="dyx.springweb.aop.MyAspect"></bean>
+
+	<!-- ProxyFactoryBean这种方式配置代理，会为每一个被代理的对象都配置一把，开发量巨大<bean id="mySpringBeforeAdvice" 
+		class="dyx.springweb.aop.SpringBeforeAdvice"></bean> <bean id="myProxy" class="org.springframework.aop.framework.ProxyFactoryBean"> 
+		<property name="target" ref="myImplement1"></property> <property name="proxyInterfaces" 
+		value="dyx.springweb.aop.MyInter"></property> <property name="interceptorNames" 
+		value="mySpringMethodInterceptor"></property> </bean> -->
+
+	<!-- 自动代理,使用beanpostprocessor原理，在bean初始化过程中，就对bean进行代理;对接口进行代理！！！ <bean 
+		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator"> 
+		<property name="beanNames" value="myImplement*" /> <property name="interceptorNames" 
+		value="mySpringMethodInterceptor"></property> </bean> -->
+
+	<!-- 自动代理的另外一种方式 <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"></bean> 
+		<bean id="myAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor"> 
+		<property name="patterns" value="dyx\.springweb\.aop\.My.*\..*"></property> 
+		<property name="advice" ref="mySpringMethodInterceptor"></property> </bean> -->
+
+
+	<!-- 使用aspectj进行切面编程 -->
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+</beans>
