@@ -22,7 +22,7 @@ public class UserDao {
 	}
 
 	public List<User> getAllUser() {
-		Query query = sessionFactory.getCurrentSession().createSQLQuery("select id,name from user.user")
+		Query query = sessionFactory.getCurrentSession().createSQLQuery("select id,name from user")
 				.addEntity(User.class);
 		List<User> list = query.list();
 		return list;
